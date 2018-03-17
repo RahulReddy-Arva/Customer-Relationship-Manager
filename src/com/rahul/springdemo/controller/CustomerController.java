@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.rahul.springdemo.entity.Customer;
 import com.rahul.springdemo.service.CustomerService;
@@ -42,5 +45,44 @@ public class CustomerController {
 				
 		return "list-customer";
 	}
+	
+	
+	@GetMapping("/showFormForAdd")
+	public String showFormForAdd(Model theModel) {
+		
+		// Create a model attribute to bind form data
+		Customer theCustomer = new Customer();
+		
+		theModel.addAttribute("customer",theCustomer);
+		
+		return "customer-form";
+	}
+	
+	
+	@PostMapping("/saveCustomer")
+	public String saveCustomer(@ModelAttribute("customer") Customer theCustomer) {
+		
+		customerService.saveCustomer(theCustomer);
+		
+		// We have to redirect our page automatically to customer/list mapping after details are saved.
+		return "redirect:/customer/list";
+	}
+	
+	
+	@GetMapping("/showFormForUpdate")
+	public String showFormForUpdate(@RequestParam("customerId") int theId, Model theModel) {
+		
+		// get the customer from database who has the above id, theId
+		Customer theCustomer = customerService.getCustomer(theId);
+		
+		//set the customer as a model aattribute to pre-populate the form 
+		theModel.addAttribute("customer",theCustomer);
+		
+		System.out.println(" A customer has been updated: " + theCustomer);
+		
+		// send over to our form
+		return "customer-form";
+	}
+
 
 }
