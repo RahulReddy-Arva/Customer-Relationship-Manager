@@ -43,11 +43,21 @@
 					<c:param name="customerId" value="${tempCustomer.id}"></c:param>
 				</c:url>
 				
+				<!-- Construct an delete link with customer id  -->
+				<c:url var="deleteLink" value="/customer/delete">
+					<c:param name="customerId" value="${tempCustomer.id}"></c:param>
+				</c:url>
+				
 				<tr>
 					<td> ${tempCustomer.firstName } </td> <!-- calls tempCustomer.getFirstName() -->
 					<td> ${tempCustomer.lastName } </td> <!-- calls tempCustomer.getLastName() -->
 					<td> ${tempCustomer.email } </td> <!-- calls tempCustomer.getEmail() -->
-					<td> <a href = "${updateLink}">Update</a> </td>   <!-- this displays the updateLink created above -->
+					<td> 
+						<a href = "${updateLink}">Update</a> <!-- this displays the updateLink created above -->
+						| 
+						<a href="${deleteLink}"
+								onClick = "if (!(confirm('Are you sure you want to delete this customer? '))) return false ">Delete</a>  <!-- this displays the deleteLink created above -->
+					</td>   
 				</tr>
 				
 			</c:forEach>

@@ -47,6 +47,9 @@ public class CustomerController {
 	}
 	
 	
+	
+	
+	
 	@GetMapping("/showFormForAdd")
 	public String showFormForAdd(Model theModel) {
 		
@@ -55,8 +58,12 @@ public class CustomerController {
 		
 		theModel.addAttribute("customer",theCustomer);
 		
+		
 		return "customer-form";
 	}
+	
+	
+	
 	
 	
 	@PostMapping("/saveCustomer")
@@ -64,9 +71,13 @@ public class CustomerController {
 		
 		customerService.saveCustomer(theCustomer);
 		
+		System.out.println("\n\n SAved a new Customer : " + theCustomer + "\n\n");
+		
 		// We have to redirect our page automatically to customer/list mapping after details are saved.
 		return "redirect:/customer/list";
 	}
+	
+	
 	
 	
 	@GetMapping("/showFormForUpdate")
@@ -78,11 +89,20 @@ public class CustomerController {
 		//set the customer as a model aattribute to pre-populate the form 
 		theModel.addAttribute("customer",theCustomer);
 		
-		System.out.println(" A customer has been updated: " + theCustomer);
+		System.out.println("\n\n A customer has been updated: " + theCustomer + "\n\n");
 		
 		// send over to our form
 		return "customer-form";
 	}
 
+	@GetMapping("/delete")
+	public String delete(@RequestParam("customerId") int theId) {
+		
+		// delete the customer
+		customerService.deleteCustomer(theId);
+		
+		
+		return "redirect:/customer/list";
+	}
 
 }
