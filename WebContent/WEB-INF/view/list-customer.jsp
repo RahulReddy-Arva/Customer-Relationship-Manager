@@ -1,5 +1,6 @@
 <!-- Support for jstl tags -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri = "http://www.springframework.org/tags/form" %>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -22,10 +23,21 @@
 		<div id = "content" >
 		
 			<!--  Create a new Button here -->
+			Add new Customer: 
 			<input type = "button" value = "Add Customer" 
 				onClick="window.location.href='showFormForAdd'; return false;"
 				class = "add-button"
 			/>
+			
+			<!-- Create the search bar here -->
+			
+			<form:form action="searchCustomer" method="POST">
+				Search Customer : 
+				<input type="text" name = "theSearchName" />
+				<input type = "Submit" value="Search" class="add-button" />
+			</form:form>
+			
+			
 		
 			<!-- add table here -->
 			<table>

@@ -27,8 +27,9 @@ public class CustomerController {
 	@Autowired
 	private CustomerService customerService;
 	
-	// Only GET method works here. So its better to use GetMapping instead of RequestMapping. 
-	// @RequestMapping(path="/list", method = RequestMethod.GET). Both are same.
+	
+	
+	
 	@GetMapping("/list")   // We are only handling get method.
 	public String listCustomer(Model theModel) {
 		
@@ -57,7 +58,6 @@ public class CustomerController {
 		Customer theCustomer = new Customer();
 		
 		theModel.addAttribute("customer",theCustomer);
-		
 		
 		return "customer-form";
 	}
@@ -95,14 +95,48 @@ public class CustomerController {
 		return "customer-form";
 	}
 
+	
+	
+	
 	@GetMapping("/delete")
 	public String delete(@RequestParam("customerId") int theId) {
 		
 		// delete the customer
 		customerService.deleteCustomer(theId);
-		
+		 
 		
 		return "redirect:/customer/list";
 	}
 
+	
+	
+	@PostMapping("/searchCustomer")
+	public String searchCustomer(@RequestParam("theSearchName")String theName , Model theModel ) {
+		
+		// Search Customers from service
+		List<Customer> theCustomers = customerService.searchCustomers(theName);
+		
+		//add the customers to model
+		// Assign the model name correctly. The model used in jsp is customers . Check the name and assign it.
+		theModel.addAttribute("customers" , theCustomers);
+		
+		System.out.println("\n\n" + "The customers after search are : ");
+		for( Customer customer : theCustomers ) {
+			System.out.println(customer);
+		}
+		System.out.println("\n\n");
+		
+		
+		return "list-customer";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
