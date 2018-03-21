@@ -72,6 +72,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 		
 		
 		// delete the customer with id
+		@SuppressWarnings("unchecked")
 		Query<Customer> theQuery = currentSession.createQuery("delete from Customer where id=:customerId");
 		theQuery.setParameter("customerId", theId);
 		
